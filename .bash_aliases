@@ -9,7 +9,9 @@ alias ohwait="git st -s --porcelain -uall | awk '{print \$2}' | /bin/grep '[.]py
 alias runs="./manage.py runserver 0.0.0.0:8000"
 alias hruns="HTTPS=on ./manage.py runserver 0.0.0.0:8001"
 alias psql="sudo su postgres -c psql"
-alias msh="./manage.py shell"
+alias msh="./manage.py mshell"
+alias f="find . -name"
+alias F="find . -iname"
 
 function cdpy() {
     MODULE_PATH=$(python -c "import $1, os.path; print os.path.dirname($1.__file__)")
