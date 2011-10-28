@@ -4,7 +4,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias cdd='cd $(python -c "import django, os.path; print os.path.dirname(django.__file__)")'
-alias grep='/bin/grep --exclude-dir=.git --exclude=tags -RIEn'
+alias g='/bin/grep --exclude-dir=.git --exclude=tags -RIEn'
 alias ohwait="git st -s --porcelain -uall | awk '{print \$2}' | /bin/grep '[.]py\$' | xargs pyflakes"
 alias runs="./manage.py runserver 0.0.0.0:8000"
 alias hruns="HTTPS=on ./manage.py runserver 0.0.0.0:8001"
