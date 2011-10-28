@@ -21,3 +21,5 @@ function cdpy() {
     fi
 }
 
+vg () { vim -q<( grep -RIEn $@ ); }
+
