@@ -21,5 +21,5 @@ function cdpy() {
     fi
 }
 
-vg () { vim -q<( grep -RIEn $@ ); }
+vg () { vim -q<( grep -RIEn "$@" ); }
 
