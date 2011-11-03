@@ -12,6 +12,7 @@ alias psql="sudo su postgres -c psql"
 alias msh="./manage.py mshell"
 alias f="find . -name"
 alias F="find . -iname"
+alias vd='vim $(git diff --name-only)'
 
 function cdpy() {
     MODULE_PATH=$(python -c "import $1, os.path; print os.path.dirname($1.__file__)")
