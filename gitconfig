@@ -1,0 +1,49 @@
+[user]
+    name = Vladimir Epifanov
+    email = voldmar@voldmar.ru
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = true
+    pager = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[core]
+    pager = less -FRSX
+    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    excludesfile = /home/voldmar/.gitignore
+
+[alias]
+    co = checkout
+    br = branch
+    st = status --ignore-submodules
+    w = whatchanged
+    ci = commit
+    ch = cherry -v
+    last = log -1
+
+[merge]
+    conflictstyle = diff3
+    tool = fugitive
+[mergetool "fugitive"]
+    cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[push]
+    default = current
