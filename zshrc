@@ -24,7 +24,7 @@ ZSH_THEME="gentoo"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git brew django github lein python redis-cli ssh-agent vagrant)
+plugins=(git brew django github lein python redis-cli vagrant)
 
 source $ZSH/oh-my-zsh.sh
 
