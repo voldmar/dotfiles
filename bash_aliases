@@ -13,8 +13,6 @@ alias msh="./manage.py mshell"
 alias f="find . -name"
 alias F="find . -iname"
 alias vd='vim $(git diff --name-only)'
-alias gmo='git merge origin/master'
-alias gst='git stash'
 
 function cdpy() {
     MODULE_PATH=$(python -c "import $1, os.path; print os.path.dirname($1.__file__)")
