@@ -29,7 +29,7 @@ plugins=(git brew django github lein python redis-cli vagrant)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH="${HOME}/bin:/usr/local/bin:/usr/local/Cellar/python/2.7.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="${HOME}/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export EDITOR=vim
 
 source ~/etc/aliases
