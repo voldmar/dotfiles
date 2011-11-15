@@ -32,5 +32,7 @@ source $ZSH/oh-my-zsh.sh
 export PATH="${HOME}/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export EDITOR=vim
 
+which pip > /dev/null && eval "$(pip completion --zsh)"
+
 source ~/etc/aliases
 source ~/.zshrc_local
