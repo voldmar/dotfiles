@@ -8,7 +8,6 @@ alias g='/bin/grep --exclude-dir=.git --exclude=tags -RIEHn'
 alias ohwait="git st -s --porcelain -uall | awk '{print \$2}' | /bin/grep '[.]py\$' | xargs pyflakes"
 alias runs="./manage.py runserver 0.0.0.0:8000"
 alias hruns="HTTPS=on ./manage.py runserver 0.0.0.0:8001"
-alias psql="sudo su postgres -c psql"
 alias msh="./manage.py mshell"
 alias f="find . -name"
 alias F="find . -iname"
