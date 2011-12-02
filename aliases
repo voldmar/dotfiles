@@ -4,8 +4,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias cdd='cd $(python -c "import django, os.path; print os.path.dirname(django.__file__)")'
-alias g='/bin/grep --exclude-dir=.git --exclude=tags -RIEHn'
-alias ohwait="git st -s --porcelain -uall | awk '{print \$2}' | /bin/grep '[.]py\$' | xargs pyflakes"
+alias g='grep --exclude-dir=.git --exclude=tags -RIEHn'
+alias ohwait="git st -s --porcelain -uall | awk '{print \$2}' | grep '[.]py\$' | xargs pyflakes"
 alias runs="./manage.py runserver 0.0.0.0:8000"
 alias hruns="HTTPS=on ./manage.py runserver 0.0.0.0:8001"
 alias msh="./manage.py mshell"
@@ -21,5 +21,5 @@ alias vd='vim $(git diff --name-only | sort -u)'
 #     fi
 # }
 
-vg () { vim -q<( /bin/grep --exclude-dir=.git --exclude=tags -RIEHn "$@" ); }
+vg () { vim -q<( grep --exclude-dir=.git --exclude=tags -RIEHn "$@" ); }
 
