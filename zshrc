@@ -7,7 +7,7 @@ plugins=(git brew django github lein python redis-cli vagrant)
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 
-export PATH="${HOME}/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="${HOME}/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.2/bin:/usr/local/Cellar/ruby/1.9.3-p0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export EDITOR=vim
 export LANG=en_US.UTF-8
 
