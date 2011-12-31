@@ -47,3 +47,5 @@
     cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 [push]
     default = current
+[github]
+	user = voldmar
