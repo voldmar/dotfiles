@@ -16,3 +16,11 @@ which virtualenvwrapper.sh > /dev/null && source $(which virtualenvwrapper.sh)
 
 source ~/etc/aliases
 source ~/.zshrc_local
+
+
+# Minimally awesome todo
+# http://blog.jerodsanto.net/2010/12/minimally-awesome-todos/
+export TODO=~/Dropbox/todo.txt
+function todo(){ if [ $# -eq 0 ]; then cat $TODO; else echo "• $@" >> $TODO; fi }
+function todone() { sed -i -e "/$*/d" $TODO; }
+
