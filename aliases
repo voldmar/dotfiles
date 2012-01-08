@@ -21,5 +21,5 @@ alias vd='vim $(git diff --name-only | sort -u)'
 #     fi
 # }
 
-vg () { vim -q<( grep --exclude-dir=.git --exclude=tags -RIEHn "$@" ); }
+vack () { vim -q<( ack "$@" ); }
 
