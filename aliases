@@ -23,3 +23,7 @@ alias vd='vim $(git diff --name-only | sort -u)'
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 
+mkmig () { ./manage.py schemamigration --auto $1 $2 }
+mkdmig () { ./manage.py datamigration $1 $2 }
+mig ()  { ./manage.py migrate $1 --ignore-ghost-migrations }
+
