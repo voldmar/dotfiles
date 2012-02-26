@@ -4,6 +4,6 @@ export TERM=xterm-color
 export PATH=${HOME}/bin:${PATH}
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
-export LESS="-R"
-export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+export LESS="-r"
+# export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
 
