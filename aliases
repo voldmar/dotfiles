@@ -27,7 +27,7 @@ alias bu="brew update && brew upgrade"
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 mkmig () { ./manage.py schemamigration --auto $1 $2 }
 mkdmig () { ./manage.py datamigration $1 $2 }
-mig ()  { ./manage.py migrate $1 --ignore-ghost-migrations }
+mig ()  { ./manage.py migrate $1 $2 --ignore-ghost-migrations }
 
 with_parents () {
     /usr/bin/which -s realpath && current=$(realpath ${1:-$PWD})
