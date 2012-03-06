@@ -30,9 +30,9 @@ mkdmig () { ./manage.py datamigration $1 $2 }
 mig ()  { ./manage.py migrate $1 $2 --ignore-ghost-migrations }
 
 with_parents () {
-    /usr/bin/which -s realpath && current=$(realpath ${1:-$PWD})
-    /usr/bin/which -s grealpath && current=$(grealpath ${1:-$PWD})
-    [[ -z current ]] && {echo Not found neither realpath, nor grealpath; return 1}
+    /usr/bin/which realpath > /dev/null && current=$(realpath ${1:-$PWD})
+    /usr/bin/which grealpath > /dev/null && current=$(grealpath ${1:-$PWD})
+    [[ -z $current ]] && echo Not found neither realpath, nor grealpath && return 1
     echo -n $current
     while [[ $current != '/' ]]
     do
