@@ -30,6 +30,7 @@ alias -g EL="2>&1 | less"
 alias week="date +%W"
 alias reset="echo -e c"
 alias rssh="ssh -fN -R 8022:localhost:22"
+alias ral="source ~/etc/aliases"
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 mkmig () { ./manage.py schemamigration --auto $1 $2 }
