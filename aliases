@@ -28,7 +28,7 @@ alias pi="pip install"
 alias bu="brew update && brew upgrade"
 alias -g EL="2>&1 | less"
 alias week="date +%W"
-alias reset="echoe -e c"
+alias reset="echo -e c"
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 mkmig () { ./manage.py schemamigration --auto $1 $2 }
