@@ -11,3 +11,5 @@ do
     ln -s etc/$file .$file
 done
 
+touch .zshrc_local
+
