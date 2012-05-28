@@ -33,6 +33,7 @@ alias reset="echo -e c"
 alias rssh="ssh -fN -R 8022:localhost:22"
 alias ral="source ~/etc/aliases"
 alias pipu="pip install --upgrade -r requirements.txt"
+alias -g dime="growlnotife -m Done -s"
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 mkmig () { ./manage.py schemamigration --auto $1 $2 }
