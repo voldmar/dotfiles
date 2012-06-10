@@ -40,6 +40,7 @@
     ci = commit
     ch = cherry -v
     last = log -1
+    lb = !git reflog | grep -o -E \"f/[a-z_-]+ to f/[a-z_-]+\" | head -20
 	switch = !legit switch \"$@\"
 	branches = !legit branches
 	sprout = !legit sprout \"$@\"
