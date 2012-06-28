@@ -45,6 +45,10 @@ runs() {
     ./manage.py runserver 0.0.0.0:${1:-8000}
 }
 
+serve() {
+    python -m SimpleHTTPServer ${1:-9000}
+}
+
 # apt-get install realpath # On Ubuntu
 # brew install coreutils # On Mac
 with_parents () {
