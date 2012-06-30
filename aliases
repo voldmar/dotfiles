@@ -4,6 +4,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias cdd='cd $(python -c "import django, os.path; print os.path.dirname(django.__file__)")'
+alias cdr='cd $(git rev-parse --show-toplevel)'
 alias ohwait="git st -s --porcelain -uall | awk '{print \$2}' | grep '[.]py\$' | xargs pyflakes"
 alias hruns="HTTPS=on ./manage.py runserver 0.0.0.0:8001"
 alias msh="./manage.py mshell"
@@ -35,6 +36,7 @@ alias ral="source ~/etc/aliases"
     && alias pipu="pip install --upgrade -r requirements-macosx.txt" \
     || alias pipu="pip install --upgrade -r requirements.txt" \
 alias -g dime="growlnotife -m Done -s"
+alias pytags='ctags --exclude=.env --exclude=migrations --languages=python --python-kinds=-i -R .'
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 mkmig () { ./manage.py schemamigration --auto $1 $2 }

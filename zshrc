@@ -10,6 +10,7 @@ unsetopt correct_all
 export PATH="${HOME}/bin:${HOME}/local/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/local/Cellar/ruby/1.9.3-p194/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export EDITOR=vim
 export LANG=en_US.UTF-8
+export CDPATH=$CDPATH:~:~/Dropbox/weekly
 
 which pip > /dev/null && eval "$(pip completion --zsh)"
 which virtualenvwrapper.sh > /dev/null && source $(which virtualenvwrapper.sh)
