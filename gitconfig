@@ -41,7 +41,7 @@
     ch = cherry -v
     cm = checkout master
     last = log -1
-    mu = !git merge $(git rev-parse --symbolic-full-name @{u})
+    up = merge @{u}
     lb = !git reflog | grep -o -E \"f/[a-z_-]+ to f/[a-z_-]+\" | head -20
 	switch = !legit switch \"$@\"
 	branches = !legit branches
