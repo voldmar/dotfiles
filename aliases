@@ -37,6 +37,9 @@ alias ral="source ~/etc/aliases"
     || alias pipu="pip install --upgrade -r requirements.txt" \
 alias -g dime="growlnotife -m Done -s"
 alias pytags='ctags --exclude=.env --exclude=migrations --languages=python --python-kinds=-i -R .'
+alias rt='./manage.py test -v2'
+alias rtc='./manage.py test -v2 --create-db'
+alias rtf='./manage.py test -v2 --failed'
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 mkmig () { ./manage.py schemamigration --auto $1 $2 }
