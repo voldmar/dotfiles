@@ -1,5 +1,4 @@
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="gentoo"
 DISABLE_AUTO_UPDATE="true"
 
 plugins=(git brew django github lein python redis-cli vagrant)
@@ -17,6 +16,20 @@ which virtualenvwrapper.sh > /dev/null && source $(which virtualenvwrapper.sh)
 
 source ~/etc/aliases
 source ~/.zshrc_local
+
+
+# Checks if there are commits behind the remote
+function git_prompt_behind() {
+  if $(echo "$(git log HEAD..origin/$(current_branch) 2> /dev/null)" | grep '^commit' &> /dev/null); then
+    echo "$ZSH_THEME_GIT_PROMPT_BEHIND"
+  fi
+}
+
+PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) $(git_prompt_info)$(git_prompt_ahead)$(git_prompt_behind) %{$fg_bold[blue]%}%#%{$reset_color%} '
+ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_bold[red]%}↓%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[red]%}↑%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="("
+ZSH_THEME_GIT_PROMPT_SUFFIX=")"
 
 
 if [ $SHLVL -eq 1 ]
