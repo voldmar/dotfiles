@@ -17,6 +17,20 @@ which virtualenvwrapper.sh > /dev/null && source $(which virtualenvwrapper.sh)
 source ~/etc/aliases
 source ~/.zshrc_local
 
+# Redefine virtualenv’s prompt
+VIRTUAL_ENV_DISABLE_PROMPT="yes"
+function virtualenv_prompt() {
+    if [[ -n $VIRTUAL_ENV ]]
+    then
+        local NAME=$(basename $VIRTUAL_ENV)
+        if [[ $NAME == ".env" ]]
+        then
+            echo "☢ "
+        else
+            echo "($NAME) "
+        fi
+    fi
+}
 
 # Checks if there are commits behind the remote
 function git_prompt_behind() {
@@ -25,7 +39,7 @@ function git_prompt_behind() {
   fi
 }
 
-PROMPT='%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) $(git_prompt_info)$(git_prompt_ahead)$(git_prompt_behind) %{$fg_bold[blue]%}%#%{$reset_color%} '
+PROMPT='%{$fg_no_bold[yellow]%}$(virtualenv_prompt)%{$reset_color%}%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) $(git_prompt_info)$(git_prompt_ahead)$(git_prompt_behind) %{$fg_bold[blue]%}%#%{$reset_color%} '
 ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_bold[red]%}↓%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[red]%}↑%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_PREFIX="("
