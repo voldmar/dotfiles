@@ -8,6 +8,7 @@ alias cdr='cd $(git rev-parse --show-toplevel)'
 alias ohwait="git st -s --porcelain -uall | awk '{print \$2}' | grep '[.]py\$' | xargs pyflakes"
 alias hruns="HTTPS=on ./manage.py runserver 0.0.0.0:8001"
 alias msh="./manage.py mshell"
+alias dsh="./manage.py dbshell"
 alias f="find . -name"
 alias F="find . -iname"
 alias vd='vim $(git diff --name-only | sort -u)'
