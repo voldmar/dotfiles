@@ -45,18 +45,3 @@ ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[red]%}↑%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_PREFIX="("
 ZSH_THEME_GIT_PROMPT_SUFFIX=")"
 
-
-if [ $SHLVL -eq 1 ]
-then
-    if [ -S $SSH_AUTH_SOCK ]
-    then
-        # Socket we are linking already does not exists
-        if [ ! -e $HOME/.ssh_auth_sock ]
-        then
-            rm $HOME/.ssh_auth_sock
-            ln -s $SSH_AUTH_SOCK $HOME/.ssh_auth_sock
-        fi
-    fi
-    export SSH_AUTH_SOCK=$HOME/.ssh_auth_sock
-fi
-
