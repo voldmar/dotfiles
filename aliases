@@ -44,8 +44,10 @@ alias rt='./manage.py test -v2'
 alias rtc='./manage.py test -v2 --create-db'
 alias rtf='./manage.py test -v2 --failed'
 alias genm='./manage.py generatemedia && (yes yes | ./manage.py collectstatic)'
+alias tack='find . -name tests -not -path "./.env/*" -not -path "./src/*" | xargs ack'
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
+vtack () { vim -q<( tack -H --nocolor --nogroup --column  "$@" ); }
 mkmig () {
     local msg name
     if msg=$(./manage.py schemamigration --auto $1 $2 2>&1)
