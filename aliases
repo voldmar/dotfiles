@@ -43,6 +43,7 @@ alias pytags='ctags --exclude=.env --exclude=migrations --languages=python --pyt
 alias rt='./manage.py test -v2'
 alias rtc='./manage.py test -v2 --create-db'
 alias rtf='./manage.py test -v2 --failed'
+alias rtx='./manage.py test -v2 -x'
 alias genm='./manage.py generatemedia && (yes yes | ./manage.py collectstatic)'
 alias tack='find . -name tests -not -path "./.env/*" -not -path "./src/*" | xargs ack'
 
