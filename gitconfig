@@ -42,7 +42,7 @@
     last = log -1
     mine = log --author=voldmar --no-merges 
     up = merge @{u}
-    lb = !git reflog | grep -o -E \"f/[0-9a-z_-]+ to f/[0-9a-z_-]+\" | head -20
+    lb = !git reflog | grep -o -E \"moving from [0-9a-z_/-]+ to [0-9a-z/_-]+\" | head -20
 	switch = !legit switch \"$@\"
 	branches = !legit branches
 	sprout = !legit sprout \"$@\"
