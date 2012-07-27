@@ -1,0 +1,8 @@
+--ignore-dir=_generated_media
+--ignore-dir=.env
+--ignore-dir=migrations
+--ignore-dir=src
+--ignore-dir=htdocs
+--type-add=css=.scss
+--type-set=jst=.jst
+--type-set=conf=.jst
