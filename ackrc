@@ -6,3 +6,4 @@
 --type-add=css=.scss
 --type-set=jst=.jst
 --type-set=conf=.jst
+--type-set=shower=.shower
