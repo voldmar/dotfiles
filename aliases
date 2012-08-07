@@ -40,10 +40,10 @@ alias ral="source ~/etc/aliases"
     || alias pipu="pip install --upgrade -r requirements.txt" \
 alias -g dime="growlnotife -m Done -s"
 alias pytags='ctags --exclude=.env --exclude=migrations --languages=python --python-kinds=-i -R .'
-alias rt='./manage.py test -v2'
-alias rtc='pyclean && ./manage.py test -v2 --create-db'
-alias rtf='./manage.py test -v2 --failed'
-alias rtx='./manage.py test -v2 -x'
+alias rtc='pyclean && genm && ./manage.py test -v2 --create-db --with-reuse-db'
+alias rt='./manage.py test -v2 --with-id --with-reuse-db'
+alias rtf='./manage.py test -v2 --with-id --failed --with-reuse-db'
+alias rtx='./manage.py test -v2 --with-id -x --with-reuse-db'
 alias genm='./manage.py generatemedia && (yes yes | ./manage.py collectstatic)'
 alias tack='find . -name tests -not -path "./.env/*" -not -path "./src/*" | xargs ack'
 
