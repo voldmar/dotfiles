@@ -73,7 +73,11 @@ mkdmig () {
 mig ()  { ./manage.py migrate $1 $2 --ignore-ghost-migrations }
 
 runs() {
-    ./manage.py runserver 0.0.0.0:${1:-8000}
+    while true
+    do
+        ./manage.py runserver 0.0.0.0:${1:-8000}
+        sleep 1
+    done
 }
 
 serve() {
