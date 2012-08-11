@@ -173,3 +173,18 @@ updreq() {
         
 }
 
+# More intellegent pyclean
+# Unalias pyclean from zsh python plugin
+unalias pyclean 2> /dev/null
+pyclean () {
+    local CACHE=.pyclean_cache HEAD=.git/HEAD TTL=-1h
+    [[ $1 == "-f" ]] && rm -f $CACHE
+
+    if [ -e $CACHE ] && [ $(find $CACHE -newer $HEAD -mtime $TTL) ]
+    then
+        cat $CACHE | xargs rm -f
+    else
+        find . -type f -name "*.py[co]" | tee $CACHE | xargs rm -f
+    fi
+}
+
