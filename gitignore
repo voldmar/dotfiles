@@ -3,3 +3,4 @@
 .*.swp
 tags
 .ropeproject
+.pyclean_cache
