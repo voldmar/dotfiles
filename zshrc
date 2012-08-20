@@ -135,16 +135,30 @@ serve() {
 
 # apt-get install realpath # On Ubuntu
 # brew install coreutils # On Mac
+/usr/bin/which realpath > /dev/null && realpath_proxy() {echo $(realpath ${1}) }
+/usr/bin/which grealpath > /dev/null && realpath_proxy() {echo $(grealpath ${1}) }
+which realpath_proxy > /dev/null || realpath_proxy() { echo $(python -c "import os.path as p; print p.dirname(p.realpath('$1'))") }
+
 with_parents () {
-    /usr/bin/which realpath > /dev/null && current=$(realpath ${1:-$PWD})
-    /usr/bin/which grealpath > /dev/null && current=$(grealpath ${1:-$PWD})
-    [[ -z $current ]] && echo Not found neither realpath, nor grealpath && return 1
+    local current=$(realpath_proxy ${1:-$PWD})
     echo -n $current
     while [[ $current != '/' ]]
     do
         current=$(dirname $current)
         echo -n ' ' $current
     done
+}
+
+try_activate () {
+    # Try find virtualenv info in local dir and activate it
+    local d=$1
+    [ -f $d/.env/bin/activate ] && source $d/.env/bin/activate && return 0
+    if [ -f $d/.env ]
+    then
+        local VENV=$(cat $d/.env)
+        (lsvirtualenv | grep -q $VENV) || mkvirtualenv $VENV
+        workon $VENV
+    fi
 }
 
 cd () {
@@ -154,13 +168,16 @@ cd () {
         # Discover virtualenv
         for d in $(with_parents)
         do
-            [ -f $d/.env/bin/activate ] && source $d/.env/bin/activate return 0
+            try_activate $d
         done
     else
-        # Deactivate virtualenv if we are not in virtualenv already
+        # Deactivate or switch virtualenv if we are not in virtualenv already
         for d in $(with_parents)
         do
-            [ -f $d/.env/bin/activate ] && return 0
+            [ -f $d/.env/bin/activate ] && local VENV=$d/.env
+            [ -f $d/.env ] && local VENV=$WORKON_HOME/$(cat $d/.env)
+            [[ $VENV != $VIRTUAL_ENV ]] && try_activate $d
+            [[ -n $VENV ]] && return 0
         done
         deactivate 2> /dev/null
     fi
