@@ -2,14 +2,10 @@
 
 FILES="colordiffrc environment gitconfig gitignore tmux.conf zshrc"
 
-cd $HOME
-
-git clone git@github.com:voldmar/dotfiles etc
+REALPATH=$(python -c "import os.path as p; print p.dirname(p.realpath('$0'))")
 
 for file in $FILES
 do
-    ln -s etc/$file .$file
+    ln -s $REALPATH/$file $HOME/.$file
 done
-
-touch .zshrc_local
 
