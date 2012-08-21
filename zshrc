@@ -81,7 +81,6 @@ alias -g EL="2>&1 | less"
 alias week="date +%W"
 alias reset="echo -e c"
 alias rssh="ssh -fN -R 8022:localhost:22"
-alias ral="source ~/etc/aliases"
 [[ $(uname) = 'Darwin' ]] \
     && alias pipu="pip install --upgrade -r requirements-macosx.txt" \
     || alias pipu="pip install --upgrade -r requirements.txt" \
