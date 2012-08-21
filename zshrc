@@ -252,6 +252,11 @@ pyclean () {
     fi
 }
 
+repl-listen () {
+    rlwrap -r --multi-line -q"\"" -b "(){}[],^%3@\";:'" lein trampoline cljsbuild repl-listen
+}
+
+
 # Must be last line
 source ~/.zshrc_local
 
