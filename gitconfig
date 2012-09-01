@@ -1,7 +1,7 @@
 # vim: set ft=config:
 [user]
     name = Vladimir Epifanov
-    email = voldmar@voldmar.ru
+    email = voldmar@voldmar.com
 
 [color]
     diff = auto
