@@ -44,14 +44,14 @@
     up = merge @{u}
     lb = !git reflog | grep -o -E \"moving from [0-9a-z_/-]+ to [0-9a-z/_-]+\" | head -20
     ed = !vim $(git diff --name-only --diff-filter=AM origin/master)
-	switch = !legit switch \"$@\"
-	branches = !legit branches
-	sprout = !legit sprout \"$@\"
-	unpublish = !legit unpublish \"$@\"
-	harvest = !legit harvest \"$@\"
-	sync = !legit sync \"$@\"
-	publish = !legit publish \"$@\"
-	graft = !legit graft \"$@\"
+    switch = !legit switch \"$@\"
+    branches = !legit branches
+    sprout = !legit sprout \"$@\"
+    unpublish = !legit unpublish \"$@\"
+    harvest = !legit harvest \"$@\"
+    sync = !legit sync \"$@\"
+    publish = !legit publish \"$@\"
+    graft = !legit graft \"$@\"
 
 [merge]
     conflictstyle = diff3
@@ -61,6 +61,6 @@
 [push]
     default = current
 [github]
-	user = voldmar
+    user = voldmar
 [branch]
-	autosetupmerge = true
+    autosetupmerge = true
