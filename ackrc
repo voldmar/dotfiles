@@ -5,6 +5,6 @@
 --ignore-dir=src
 --type-add=css=.scss
 --type-set=jst=.jst
---type-set=conf=.jst
+--type-set=conf=.conf
 --type-set=shower=.shower
 --type-set=clojurescript=.cljs
