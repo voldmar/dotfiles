@@ -1,5 +1,6 @@
 --ignore-dir=.env
 --ignore-dir=_generated_media
+--ignore-dir=cover
 --ignore-dir=htdocs
 --ignore-dir=migrations
 --ignore-dir=src
