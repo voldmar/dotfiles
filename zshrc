@@ -95,6 +95,7 @@ alias rtx='./manage.py test -v2 --with-id -x --with-reuse-db'
 alias genm='./manage.py generatemedia && (yes yes | ./manage.py collectstatic)'
 alias tack='find . -name tests -not -path "./.env/*" -not -path "./src/*" | xargs ack'
 alias acka='ack -a'
+alias vim-update='brew upgrade ~/Dropbox/vim.rb'
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 vtack () { vim -q<( tack -H --nocolor --nogroup --column  "$@" ); }
