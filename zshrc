@@ -261,6 +261,11 @@ pbcopy () {
     cat $1 | /usr/bin/pbcopy
 }
 
+# Because ack searches .clj very strange 
+gj () {
+    grep $@ **/*.clj
+}
+
 # Must be last line
 source ~/.zshrc_local
 
