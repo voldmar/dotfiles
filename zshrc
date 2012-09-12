@@ -82,9 +82,6 @@ alias -g EL="2>&1 | less"
 alias week="date +%W"
 alias reset="echo -e c"
 alias rssh="ssh -fN -R 8022:localhost:22"
-[[ $(uname) = 'Darwin' ]] \
-    && alias pipu="pip install --upgrade -r requirements-macosx.txt" \
-    || alias pipu="pip install --upgrade -r requirements.txt" \
 alias -g dime="growlnotife -m Done -s"
 alias pytags='ctags --exclude=.env --exclude=migrations --languages=python --python-kinds=-i -R .'
 alias rtc='pyclean && ./manage.py test -v2 --create-db'
@@ -264,6 +261,26 @@ pbcopy () {
 # Because ack searches .clj very strange 
 gj () {
     grep $@ **/*.clj
+}
+
+pipu () {
+    if [[ $(uname) = 'Darwin' && -e requirements-macosx.txt ]]
+    then
+        pip install --upgrade -r requirements-macosx.txt
+    else
+        pip install --upgrade -r requirements.txt
+    fi
+}
+
+ven () {
+    if [[ -e requirements-macosx.txt || -e requirements.txt ]]
+    then
+        virtualenv .env
+        cd .
+        pipu
+    else
+        echo "You must have requirements.txt to create new environment"
+    fi
 }
 
 # Must be last line
