@@ -1,7 +1,7 @@
 ZSH=$HOME/.oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(git brew django github lein python redis-cli vagrant)
+plugins=(git brew github lein python redis-cli vagrant)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
