@@ -9,7 +9,7 @@ unsetopt correct_all
 export PATH="${HOME}/bin:${HOME}/local/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/local/Cellar/ruby/1.9.3-p194/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export EDITOR=vim
 export LANG=en_US.UTF-8
-export CDPATH=$CDPATH:~:~/Dropbox/weekly
+export CDPATH=$CDPATH:~:~/Dropbox/proj:~/Dropbox/contrib:~/Dropbox/weekly
 export TERM=xterm-256color
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
