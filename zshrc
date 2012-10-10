@@ -263,13 +263,16 @@ gj () {
     grep $@ **/*.clj
 }
 
+commit-id () {
+    git log -1 --no-merges --oneline -- $1 | cut -d\  -f 1
+}
+
 pipu () {
-    if [[ $(uname) = 'Darwin' && -e requirements-macosx.txt ]]
-    then
-        pip install --upgrade -r requirements-macosx.txt
-    else
-        pip install --upgrade -r requirements.txt
-    fi
+    [[ -f .lastcommit ]] && last_commit=$(cat .lastcommit)
+    current_commit=$(commit-id requirements.txt)
+    [[ $last_commit != $current_commit ]] && new=$(git diff $last_commit..$current_commit -- requirements.txt | grep '^+[^+]' | cut -c 2- )
+    [[ -n $new ]] && echo $new && pip install -r <(echo $new)
+    commit-id requirements.txt > .lastcommit
 }
 
 ven () {
