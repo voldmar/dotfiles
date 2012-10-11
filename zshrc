@@ -268,6 +268,7 @@ commit-id () {
 }
 
 pipu () {
+    [[ -z $VIRTUAL_ENV ]] && echo "you must be in virtualenv to run pipu" 1>&2 && return 1
     [[ -f .lastcommit ]] && last_commit=$(cat .lastcommit)
     current_commit=$(commit-id requirements.txt)
     [[ $last_commit != $current_commit ]] && new=$(git diff $last_commit..$current_commit -- requirements.txt | grep '^+[^+]' | cut -c 2- )
