@@ -2,6 +2,7 @@
 *.pyo
 .*.swp
 tags
+.env
 .ropeproject
 .pyclean_cache
 .lastcommit
