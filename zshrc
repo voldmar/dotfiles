@@ -40,7 +40,19 @@ function git_prompt_behind() {
   fi
 }
 
-PROMPT='%{$fg_no_bold[yellow]%}$(virtualenv_prompt)%{$reset_color%}%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) $(git_prompt_info)$(git_prompt_ahead)$(git_prompt_behind) %{$fg_bold[blue]%}%#%{$reset_color%} '
+function smart_current_dir() {
+    PROJ_DIRS=("$(echo ~)/proj/" "$(echo ~)/Dropbox/proj/")
+    for PROJ in $PROJ_DIRS
+    do
+        DIR=${PWD##$PROJ}
+        [[ $DIR != $PWD ]] && echo "☢ $DIR" && return
+    done
+    DIR=${PWD##$HOME}
+    [[ $DIR != $PWD ]] && echo "~$DIR" && return
+    echo $PWD
+}
+
+PROMPT='%{$fg_no_bold[yellow]%}$(virtualenv_prompt)%{$reset_color%}%(!.%{$fg_bold[red]%}.%{$fg_bold[green]%})%m %{$fg_bold[blue]%}$(smart_current_dir) $(git_prompt_info)$(git_prompt_ahead)$(git_prompt_behind) %{$fg_bold[blue]%}%#%{$reset_color%} '
 ZSH_THEME_GIT_PROMPT_BEHIND="%{$fg_bold[red]%}↓%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[red]%}↑%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_PREFIX="("
