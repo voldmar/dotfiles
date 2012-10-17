@@ -24,12 +24,9 @@ function virtualenv_prompt() {
     if [[ -n $VIRTUAL_ENV ]]
     then
         local NAME=$(basename $VIRTUAL_ENV)
-        if [[ $NAME == ".env" ]]
-        then
-            echo "☢ "
-        else
-            echo "($NAME) "
-        fi
+        [[ $NAME == ".env" ]] && echo "☢ " && return
+        [[ $NAME == "ostrota" ]] && echo "Ω " && return
+        echo "($NAME) "
     fi
 }
 
