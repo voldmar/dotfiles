@@ -6,7 +6,7 @@ plugins=(git brew github lein python redis-cli vagrant)
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 
-export PATH="${HOME}/bin:${HOME}/local/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/local/Cellar/ruby/1.9.3-p194/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="${HOME}/bin:/usr/local/CrossPack-AVR/bin:${HOME}/local/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/local/Cellar/ruby/1.9.3-p286/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export EDITOR=vim
 export LANG=en_US.UTF-8
 export CDPATH=$CDPATH:~:~/Dropbox/proj:~/Dropbox/contrib:~/Dropbox/weekly
@@ -67,7 +67,6 @@ alias msh="./manage.py mshell"
 alias dsh="./manage.py dbshell"
 alias f="find . -name"
 alias F="find . -iname"
-alias vd='vim $(git diff --name-only | sort -u)'
 alias tls='tmux list-sessions'
 alias ta='tmux attach'
 alias ta0='tmux attach -t0'
@@ -93,11 +92,11 @@ alias reset="echo -e c"
 alias rssh="ssh -fN -R 8022:localhost:22"
 alias -g dime="growlnotife -m Done -s"
 alias pytags='ctags --exclude=.env --exclude=migrations --languages=python --python-kinds=-i -R .'
-alias rtc='pyclean && ./manage.py test -v2 --create-db'
-alias frtc='pyclean -f && genm && ./manage.py test -v2 --create-db'
-alias rt='./manage.py test -v2 --with-id --with-reuse-db'
-alias rtf='./manage.py test -v2 --with-id --failed --with-reuse-db'
-alias rtx='./manage.py test -v2 --with-id -x --with-reuse-db'
+alias rtc='pyclean && ./manage.py test -v --create-db'
+alias rtf='pyclean && ./manage.py test -v --failed'
+alias rtcf='pyclean && rm -f .noseids && ./manage.py test -v --create-db --failed'
+alias frtc='pyclean -f && genm && ./manage.py test -v --create-db'
+alias rt='./manage.py test -v'
 alias genm='./manage.py generatemedia && (yes yes | ./manage.py collectstatic)'
 alias tack='find . -name tests -not -path "./.env/*" -not -path "./src/*" | xargs ack'
 alias acka='ack -a'
@@ -110,7 +109,8 @@ mkmig () {
     if msg=$(./manage.py schemamigration --auto $1 $2 2>&1)
     then
         name=$(echo $msg | sed -E 's/.* ([0-9]+.*\.py).*/\1/')
-        $EDITOR $1/migrations/$name
+        # $EDITOR $1/migrations/$name
+        echo $msg
     else
         echo $msg 1>&2 
     fi
@@ -121,7 +121,7 @@ mkdmig () {
     then
         name=$(echo $msg | sed -E 's/.* ([0-9]+.*\.py).*/\1/')
         echo $name
-        $EDITOR $1/migrations/$name
+        # $EDITOR $1/migrations/$name
     else
         echo $msg 1>&2 
     fi
@@ -284,6 +284,9 @@ pipu () {
     [[ -n $new ]] && echo $new && pip install -r <(echo $new)
     commit-id requirements.txt > .lastcommit
 }
+pipu () {
+    pip install --upgrade -r requirements.txt
+}
 
 ven () {
     if [[ -e requirements-macosx.txt || -e requirements.txt ]]
@@ -294,6 +297,20 @@ ven () {
     else
         echo "You must have requirements.txt to create new environment"
     fi
+}
+
+vd () {
+    vim $(git diff --name-only -- $@ | sort -u)
+}
+
+vt () {
+    # vt path/to/test.py:TestClass.test_method —> open path at method
+    local TEST=$1
+    local FILE=$(echo $TEST | cut -d: -f1)
+    local INFILE=$(echo $TEST | cut -d: -f2)
+    local CLASS=$(echo $INFILE | cut -d. -f1)
+    local METHOD=$(echo $INFILE | cut -d. -f2)
+    vim $FILE +/$CLASS +/$METHOD
 }
 
 # Must be last line
