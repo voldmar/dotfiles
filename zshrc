@@ -6,7 +6,7 @@ plugins=(git brew github lein python redis-cli vagrant)
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 
-export PATH="${HOME}/bin:/usr/local/CrossPack-AVR/bin:${HOME}/local/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/local/Cellar/ruby/1.9.3-p286/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="${HOME}/bin:/usr/local/CrossPack-AVR/bin:${HOME}/local/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/local/Cellar/ruby/1.9.3-p327/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export EDITOR=vim
 export LANG=en_US.UTF-8
 export CDPATH=$CDPATH:~:~/Dropbox/proj:~/Dropbox/contrib:~/Dropbox/weekly
