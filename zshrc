@@ -168,8 +168,7 @@ try_activate () {
     fi
 }
 
-cd () {
-    builtin cd "$@"
+update_venv () {
     if [ -z $VIRTUAL_ENV ]
     then
         # Discover virtualenv
@@ -188,6 +187,11 @@ cd () {
         done
         deactivate 2> /dev/null
     fi
+}
+
+cd () {
+    builtin cd "$@"
+    update_venv
 }
 
 function cdpy() {
@@ -312,6 +316,8 @@ vt () {
     local METHOD=$(echo $INFILE | cut -d. -f2)
     vim $FILE +/$CLASS +/$METHOD
 }
+
+update_venv
 
 # Must be last line
 source ~/.zshrc_local
