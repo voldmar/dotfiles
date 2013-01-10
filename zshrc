@@ -143,13 +143,10 @@ serve() {
 }
 
 # apt-get install realpath # On Ubuntu
-# brew install coreutils # On Mac
-/usr/bin/which realpath > /dev/null && realpath_proxy() {echo $(realpath ${1}) }
-/usr/bin/which grealpath > /dev/null && realpath_proxy() {echo $(grealpath ${1}) }
-which realpath_proxy > /dev/null || realpath_proxy() { echo $(python -c "import os.path as p; print p.dirname(p.realpath('$1'))") }
+# brew install coreutils && ln -s /usr/local/bin/{g,}realpath  # On Mac
 
 with_parents () {
-    local current=$(realpath_proxy ${1:-$PWD})
+    local current="$(realpath ${1:-$PWD})"
     echo -n $current
     while [[ $current != '/' ]]
     do
