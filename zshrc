@@ -313,7 +313,8 @@ vt () {
     local INFILE=$(echo $TEST | cut -d: -f2)
     local CLASS=$(echo $INFILE | cut -d. -f1)
     local METHOD=$(echo $INFILE | cut -d. -f2)
-    vim $FILE +/$CLASS +/$METHOD
+    vim $FILE +/"\<$CLASS\>" +/"\<$METHOD\>"
+}
 
 false && which drip >/dev/null && clj () {
     # Put the Clojure jar from the cellar and the current folder in the classpath.
