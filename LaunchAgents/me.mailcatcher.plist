@@ -8,7 +8,7 @@
     <string>me.mailcatcher</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/local/Cellar/ruby/1.9.3-p194/bin/mailcatcher</string>
+      <string>/Users/voldmar/.rbenv/shims/mailcatcher</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

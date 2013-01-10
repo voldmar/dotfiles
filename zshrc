@@ -18,6 +18,7 @@ export LESS="-r"
 
 which pip > /dev/null && eval "$(pip completion --zsh)"
 which virtualenvwrapper.sh > /dev/null && source $(which virtualenvwrapper.sh)
+which rbenv > /dev/null && eval "$(rbenv init -)"
 
 # Redefine virtualenv’s prompt
 VIRTUAL_ENV_DISABLE_PROMPT="yes"
