@@ -14,6 +14,7 @@ export TERM=xterm-256color
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
 export LESS="-r"
+# export LEIN_JAVA_CMD=${LEIN_JAVA_CMD-drip}
 
 which pip > /dev/null && eval "$(pip completion --zsh)"
 which virtualenvwrapper.sh > /dev/null && source $(which virtualenvwrapper.sh)
@@ -315,6 +316,16 @@ vt () {
     local CLASS=$(echo $INFILE | cut -d. -f1)
     local METHOD=$(echo $INFILE | cut -d. -f2)
     vim $FILE +/$CLASS +/$METHOD
+
+false && which drip >/dev/null && clj () {
+    # Put the Clojure jar from the cellar and the current folder in the classpath.
+    CLOJURE=$CLASSPATH:/usr/local/Cellar/clojure/1.4.0/clojure-1.4.0.jar:${PWD}
+
+    if [ "$#" -eq 0 ]; then
+        drip -cp "$CLOJURE" clojure.main --repl
+    else
+        drip -cp "$CLOJURE" clojure.main "$@"
+    fi
 }
 
 update_venv
