@@ -31,6 +31,7 @@
     pager = less -FRSX
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
     excludesfile = ~/.gitignore
+	pager = less
 
 [alias]
     co = checkout
@@ -53,7 +54,9 @@
     publish = !legit publish \"$@\"
     graft = !legit graft \"$@\"
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-    sdm = diff --stat origin/master
+    d = diff
+    s = diff --stat
+    sm = diff --stat origin/master
 
 [merge]
     conflictstyle = diff3
