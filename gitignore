@@ -6,3 +6,4 @@ tags
 .ropeproject
 .pyclean_cache
 .lastcommit
+.agignore
