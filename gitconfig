@@ -45,14 +45,6 @@
     up = merge @{u}
     lb = "!git reflog | grep -o -E 'moving from [0-9a-z_/-]+ to [0-9a-z/_-]+' | grep -o -E 'f/[0-9a-z_-]+' | awk '{ if ( !counter[$1]  ) { counter[$1]++; print $1} }' | head -10"
     ed = !vim $(git diff --name-only --diff-filter=AM origin/master)
-    switch = !legit switch \"$@\"
-    branches = !legit branches
-    sprout = !legit sprout \"$@\"
-    unpublish = !legit unpublish \"$@\"
-    harvest = !legit harvest \"$@\"
-    sync = !legit sync \"$@\"
-    publish = !legit publish \"$@\"
-    graft = !legit graft \"$@\"
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     d = diff
     s = diff --stat
@@ -61,8 +53,6 @@
 [merge]
     conflictstyle = diff3
     tool = fugitive
-[mergetool "fugitive"]
-    cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 [push]
     default = current
 [github]
