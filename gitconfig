@@ -43,7 +43,7 @@
     last = log -1
     mine = log --author=voldmar --no-merges 
     up = merge @{u}
-    lb = !git reflog | grep -o -E \"moving from [0-9a-z_/-]+ to [0-9a-z/_-]+\" | head -20
+    lb = "!git reflog | grep -o -E 'moving from [0-9a-z_/-]+ to [0-9a-z/_-]+' | grep -o -E 'f/[0-9a-z_-]+' | awk '{ if ( !counter[$1]  ) { counter[$1]++; print $1} }' | head -10"
     ed = !vim $(git diff --name-only --diff-filter=AM origin/master)
     switch = !legit switch \"$@\"
     branches = !legit branches
