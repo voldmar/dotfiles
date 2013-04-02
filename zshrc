@@ -32,6 +32,11 @@ function virtualenv_prompt() {
     fi
 }
 
+function git_prompt_info () {
+	ref=$(git symbolic-ref HEAD 2> /dev/null)  || ref=$(git rev-parse --short HEAD 2> /dev/null)  || return
+	echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}%{$fg_no_bold[yellow]%}$(parse_git_dirty)%{$fg_bold[blue]%}$ZSH_THEME_GIT_PROMPT_SUFFIX"
+}
+
 # Checks if there are commits behind the remote
 function git_prompt_behind() {
   if $(echo "$(git log HEAD..origin/$(current_branch) 2> /dev/null)" | grep '^commit' &> /dev/null); then
