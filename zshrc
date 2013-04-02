@@ -316,6 +316,14 @@ vd () {
     vim $(git diff --name-only -- $@ | sort -u)
 }
 
+sd () {
+    subl $(git diff --name-only -- $@ | sort -u)
+}
+
+sdm () {
+    subl $(git diff --name-only origin/master -- $@ | sort -u)
+}
+
 vt () {
     # vt path/to/test.py:TestClass.test_method —> open path at method
     local TEST=$1
