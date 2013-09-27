@@ -3,6 +3,7 @@
 .*.swp
 tags
 .env
+.venv
 .ropeproject
 .pyclean_cache
 .lastcommit

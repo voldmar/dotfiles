@@ -3,10 +3,12 @@ DISABLE_AUTO_UPDATE="true"
 
 plugins=(git brew github lein python redis-cli vagrant)
 
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 
-export PATH="${HOME}/Dropbox/weekly:${HOME}/bin:/usr/local/CrossPack-AVR/bin:${HOME}/local/bin:/usr/local/share/npm/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="${HOME}/Dropbox/weekly:${HOME}/bin:/usr/local/share/npm/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 export EDITOR=vim
 export LANG=en_US.UTF-8
 export CDPATH=$CDPATH:~:~/Dropbox/proj:~/Dropbox/contrib:~/Dropbox/weekly
@@ -26,7 +28,7 @@ function virtualenv_prompt() {
     if [[ -n $VIRTUAL_ENV ]]
     then
         local NAME=$(basename $VIRTUAL_ENV)
-        [[ $NAME == ".env" ]] && echo "☢ " && return
+        [[ $NAME == ".venv" ]] && echo "☢ " && return
         [[ $NAME == "ostrota" ]] && echo "Ω " && return
         echo "($NAME) "
     fi
@@ -103,16 +105,17 @@ alias week="date +%W"
 alias reset="echo -e c"
 alias rssh="ssh -fN -R 8022:localhost:22"
 alias -g dime="growlnotife -m Done -s"
-alias pytags='ctags --exclude=.env --exclude=migrations --languages=python --python-kinds=-i -R .'
+alias pytags='ctags --exclude=.venv --exclude=migrations --languages=python --python-kinds=-i -R .'
 alias rtc='pyclean && ./manage.py test -v --create-db'
 alias rtf='pyclean && ./manage.py test -v --failed'
 alias rtcf='pyclean && rm -f .noseids && ./manage.py test -v --create-db --failed'
 alias frtc='pyclean -f && genm && ./manage.py test -v --create-db'
 alias rt='./manage.py test -v'
 alias genm='./manage.py singlepage build && ./manage.py locale_import && ./manage.py generatemedia && (yes yes | ./manage.py collectstatic)'
-alias tack='find . -name tests -not -path "./.env/*" -not -path "./src/*" | xargs ack'
+alias tack='find . -name tests -not -path "./.venv/*" -not -path "./src/*" | xargs ack'
 alias acka='ack -a'
 alias vim-update='brew upgrade ~/Dropbox/vim.rb'
+alias lrs="lein ring server-headless"
 
 vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
 vtack () { vim -q<( tack -H --nocolor --nogroup --column  "$@" ); }
@@ -141,11 +144,22 @@ mkdmig () {
 mig ()  { ./manage.py migrate $1 $2 --ignore-ghost-migrations }
 
 runs() {
-    while true
-    do
-        ./manage.py runserver 0.0.0.0:${1:-8000}
-        sleep 1
-    done
+    if [[ -x manage.py ]]
+    then
+        while true
+        do
+            ./manage.py runserver 0.0.0.0:${1:-8000}
+            sleep 1
+        done
+    fi
+    if [[ -e Procfile ]]
+    then
+        while true
+        do
+            foreman start
+            sleep 1
+        done
+    fi
 }
 
 serve() {
@@ -168,10 +182,10 @@ with_parents () {
 try_activate () {
     # Try find virtualenv info in local dir and activate it
     local d=$1
-    [ -f $d/.env/bin/activate ] && source $d/.env/bin/activate && return 0
-    if [ -f $d/.env ]
+    [ -f $d/.venv/bin/activate ] && source $d/.venv/bin/activate && return 0
+    if [ -f $d/.venv ]
     then
-        local VENV=$(cat $d/.env)
+        local VENV=$(cat $d/.venv)
         (lsvirtualenv | grep -q $VENV) || mkvirtualenv $VENV
         workon $VENV
     fi
@@ -189,8 +203,8 @@ update_venv () {
         # Deactivate or switch virtualenv if we are not in virtualenv already
         for d in $(with_parents)
         do
-            [ -f $d/.env/bin/activate ] && local VENV=$d/.env
-            [ -f $d/.env ] && local VENV=$WORKON_HOME/$(cat $d/.env)
+            [ -f $d/.venv/bin/activate ] && local VENV=$d/.venv
+            [ -f $d/.venv ] && local VENV=$WORKON_HOME/$(cat $d/.venv)
             [[ $VENV != $VIRTUAL_ENV ]] && try_activate $d
             [[ -n $VENV ]] && return 0
         done
@@ -301,17 +315,6 @@ pipu () {
     pip install --upgrade -r requirements.txt
 }
 
-ven () {
-    if [[ -e requirements-macosx.txt || -e requirements.txt ]]
-    then
-        virtualenv .env
-        cd .
-        pipu
-    else
-        echo "You must have requirements.txt to create new environment"
-    fi
-}
-
 vd () {
     vim $(git diff --name-only -- $@ | sort -u)
 }
@@ -343,6 +346,11 @@ false && which drip >/dev/null && clj () {
     else
         drip -cp "$CLOJURE" clojure.main "$@"
     fi
+}
+
+red () {
+    let task=$(echo $(current_branch) | pcregrep -o '(?<=f/)\d+')
+    [[ -n $task ]] && open "http://red.ostrovok.ru/issues/$task"
 }
 
 update_venv
