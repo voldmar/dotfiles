@@ -1,0 +1,85 @@
+;; User keymap
+;; -----------------------------
+;; Keymaps are stored as a set of diffs that are merged together together
+;; to create the final set of keys. You can modify these diffs to either add
+;; or subtract bindings.
+;;
+;; Like behaviors, keys are bound by tag. When objects with those tags are active
+;; the key bindings are live. Keys can be bound to any number of Light Table commands,
+;; allowing you the flexibility to execute multiple operations together. To see a list
+;; of all the commands you can execute, start typing a word related to the thing you
+;; want to do in between the square brackets (e.g. type "editor").
+
+
+{ :+
+  {:app {}
+   :editor
+   {
+    "pmeta-\\" [:workspace.show]
+
+
+    ;;      "pmeta-/"           [:toggle-comment-selection]
+    ;;      "ctrl-shift-up"     [:editor.sublime.selectLinesUpward]
+    ;;      "ctrl-shift-down"   [:editor.sublime.selectLinesDownward]
+    ;;      "pmeta-d"           [:editor.sublime.selectNextOccurrence]
+    ;;      "ctrl-m"            [:editor.sublime.goToBracket]
+    ;;      "ctrl-shift-m"      [:editor.sublime.selectBetweenBrackets]
+    ;;      "shift-pmeta-space" [:editor.sublime.selectScope]
+    ;;      "ctrl-pmeta-up"     [:editor.sublime.swapLineUp]
+    ;;      "ctrl-pmeta-down"   [:editor.sublime.swapLineDown]
+    ;;      "shift-pmeta-l"     [:editor.sublime.splitSelectionByLine]
+    ;;      "pmeta-j"           [:editor.sublime.joinLines]
+    ;;      "shift-pmeta-d"     [:editor.sublime.duplicateLine]
+    ;;      "pmeta-k"           [:editor.delete-line]
+
+    ;; Push parens left or right (Slurp)
+    "cmd-shift-9" [:paredit.grow.left]
+    "cmd-shift-0" [:paredit.grow.right]
+
+    ;; Shrink parens inward (Barf)
+    "cmd-shift-." [:paredit.shrink.left]
+    "cmd-shift-," [:paredit.shrink.right]
+
+    "pmeta-r" [:paredit-plus.raise-sexp]
+
+    "ctrl-enter" [:eval-editor-form]
+
+    "alt-enter" [(:paredit.select.parent "(")
+                 :eval-editor-form
+                 :paredit.select.clear]
+
+    "ctrl-w" [:paredit-plus.wrap-round]
+
+    ;; Format the parent ()
+    "ctrl-s" [:paredit.select.parent
+              :smart-indent-selection
+              :paredit.select.clear]
+
+
+    "pmeta-shift-d" [:editor.sublime.duplicateLine]
+    "cmd-enter" [:editor.sublime.insertLineAfter
+                  :smart-indent-selection]
+    "pmeta-/" [:toggle-comment-selection]
+    "pmeta-ctrl-up" [:editor.sublime.swapLineUp]
+    "pmeta-ctrl-down" [:editor.sublime.swapLineDown]
+    "pmeta-j" [:editor.sublime.joinLines]
+    "pmeta-l" [:editor.select-line]
+    "pmeta-shift-l" [:editor.sublime.selectLinesDownward]
+
+    "ctrl-d" [:editor.sublime.selectNextOccurrence]
+
+
+    "ctrl-m"  [:editor.sublime.goToBracket]
+    "ctrl-shift-m" [:paredit.select.parent]
+    ;;      "ctrl-shift-m" [:paredit.select.parent]
+    "ctrl-w" [:paredit-plus.wrap-round]
+    "ctrl-u" [:paredit.unwrap.parent]
+
+
+
+
+    }
+   }
+  }
+
+
