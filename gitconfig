@@ -32,6 +32,7 @@
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	excludesfile = /Users/voldmar/.gitignore
 	pager = less
+	autocrlf = input
 
 [alias]
     co = checkout
@@ -52,7 +53,6 @@
 
 [merge]
     conflictstyle = diff3
-    tool = fugitive
 [push]
     default = current
 [github]
@@ -65,3 +65,6 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
