@@ -1,26 +1,27 @@
 ZSH=$HOME/.oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
 
-plugins=(git brew github lein python redis-cli vagrant)
+plugins=(git brew github lein python redis-cli vagrant ssh-agent npm node docker)
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 
-export PATH="${HOME}/Dropbox/weekly:${HOME}/bin:/usr/local/share/npm/bin:/usr/local/share/python:/usr/local/bin:/usr/local/Cellar/python/2.7.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="${HOME}/bin:/usr/local/share/npm/bin:/usr/local/bin:${PATH}"
 export EDITOR=vim
 export LANG=en_US.UTF-8
-export CDPATH=$CDPATH:~:~/Dropbox/proj:~/Dropbox/contrib:~/Dropbox/weekly
 export TERM=xterm-256color
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
 export LESS="-r"
 # export LEIN_JAVA_CMD=${LEIN_JAVA_CMD-drip}
+export LEIN_FAST_TRAMPOLINE=y
 
-which pip > /dev/null && eval "$(pip completion --zsh)"
-which virtualenvwrapper.sh > /dev/null && source $(which virtualenvwrapper.sh)
-which rbenv > /dev/null && eval "$(rbenv init -)"
+
+#which pip > /dev/null && eval "$(pip completion --zsh)"
+#which virtualenvwrapper.sh > /dev/null && source $(which virtualenvwrapper.sh)
+#which rbenv > /dev/null && eval "$(rbenv init -)"
 
 # Redefine virtualenv’s prompt
 VIRTUAL_ENV_DISABLE_PROMPT="yes"
@@ -81,86 +82,37 @@ alias ta='tmux attach'
 alias ta0='tmux attach -t0'
 alias ta1='tmux attach -t1'
 alias ta2='tmux attach -t2'
-alias gs="git st"
+
+alias ga="git add"
+alias gc="git ci"
+alias gcaa="git ci -a --amend"
+alias gcb="git checkout -b"
 alias gci="git ci"
+alias gcl="git clone"
+alias gd="git diff"
+alias gdm="gd origin/master"
 alias gf="git fetch --prune"
 alias gm="git merge"
 alias gmom="git merge origin/master"
-alias ga="git add"
 alias gp="git push --set-upstream"
 alias gpl="git pull --prune"
-alias gd="git diff"
-alias gu="git up"
-alias gcb="git checkout -b"
-alias gcl="git clone"
-alias gsm="git sm"
-alias gdm="gd origin/master"
+alias gs="git st"
 alias gsh="git stash"
 alias gsl="git stash list"
+alias gsm="git sm"
 alias gsp="git stash pop"
-alias pi="pip install"
-alias bu="brew update && brew upgrade && brew cleanup"
+alias gu="git up"
+
 alias -g EL="2>&1 | less"
-alias week="date +%W"
+alias -g dime="growlnotife -m Done -s"
+alias ancient="lein ancient upgrade :all; lein ancient upgrade-profiles :all"
+alias bu="brew update && brew upgrade && brew cleanup"
+alias cljsbuild="lein trampoline cljsbuild $@"
 alias reset="echo -e c"
 alias rssh="ssh -fN -R 8022:localhost:22"
-alias -g dime="growlnotife -m Done -s"
-alias pytags='ctags --exclude=.venv --exclude=migrations --languages=python --python-kinds=-i -R .'
-alias rtc='pyclean && ./manage.py test -v --create-db'
-alias rtf='pyclean && ./manage.py test -v --failed'
-alias rtcf='pyclean && rm -f .noseids && ./manage.py test -v --create-db --failed'
-alias frtc='pyclean -f && genm && ./manage.py test -v --create-db'
-alias rt='./manage.py test -v'
-alias genm='./manage.py singlepage build && ./manage.py locale_import && ./manage.py generatemedia && (yes yes | ./manage.py collectstatic)'
-alias tack='find . -name tests -not -path "./.venv/*" -not -path "./src/*" | xargs ack'
-alias acka='ack -a'
-alias vim-update='brew upgrade ~/Dropbox/vim.rb'
-alias lrs="lein ring server-headless"
+alias week="date +%W"
 
-vack () { vim -q<( ack -H --nocolor --nogroup --column  "$@" ); }
-vtack () { vim -q<( tack -H --nocolor --nogroup --column  "$@" ); }
-mkmig () {
-    local msg name
-    if msg=$(./manage.py schemamigration --auto $1 $2 2>&1)
-    then
-        name=$(echo $msg | sed -E 's/.* ([0-9]+.*\.py).*/\1/')
-        # $EDITOR $1/migrations/$name
-        echo $msg
-    else
-        echo $msg 1>&2 
-    fi
-}
-mkdmig () {
-    local msg name
-    if msg=$(./manage.py datamigration $1 $2 2>&1)
-    then
-        name=$(echo $msg | sed -E 's/.* ([0-9]+.*\.py).*/\1/')
-        echo $name
-        # $EDITOR $1/migrations/$name
-    else
-        echo $msg 1>&2 
-    fi
-}
-mig ()  { ./manage.py migrate $1 $2 --ignore-ghost-migrations }
-
-runs() {
-    if [[ -x manage.py ]]
-    then
-        while true
-        do
-            ./manage.py runserver 0.0.0.0:${1:-8000}
-            sleep 1
-        done
-    fi
-    if [[ -e Procfile ]]
-    then
-        while true
-        do
-            foreman start
-            sleep 1
-        done
-    fi
-}
+vag () { vim -q<(ag --nocolor --nogroup --filename --column "$@" ); }
 
 serve() {
     python -m SimpleHTTPServer ${1:-9000}
@@ -212,10 +164,10 @@ update_venv () {
     fi
 }
 
-cd () {
-    builtin cd "$@"
-    update_venv
-}
+# cd () {
+    # builtin cd "$@"
+    # update_venv
+# }
 
 function cdpy() {
     if MODULE_PATH=$(python -c "import $1, os.path; print os.path.dirname($1.__file__)" 2> /dev/null)
@@ -233,63 +185,6 @@ export TODO=~/Dropbox/todo.txt
 function todo(){ if [ $# -eq 0 ]; then cat $TODO; else echo "• $@" >> $TODO; fi }
 function todone() { sed -i -e "/$*/d" $TODO; }
 
-
-# pip’s requirements.txt update
-updreq() {
-
-    (( $# != 2 )) && { echo "Usage: $0 <requirement> <version>" >&2; return 1}
-    requirement=$1
-    revision=$2
-    grep -q "${requirement}" requirements.txt || { echo "Unknown requirement ${requirement}" >&2; return 2 }
-    [[ (( $(grep -c "${requirement}" requirements.txt) -gt 1 )) ]] && { echo "Ambigous requirement ${requirement}" >&2; grep --color=auto "${requirement}" requirements.txt; return 3} 
-
-
-    if grep -q "^-e .*${requirement}" requirements.txt
-    then
-        if grep -q "@${revision}.*#egg=.*${requirement}.*" requirements.txt
-        then
-            echo "requirement ${requirement} already has revision ${revision}" >&2
-            return 4
-        else
-            sed -i "/${requirement}/s/@.\+#/@${revision}#/" requirements.txt
-            return 0
-        fi
-    fi
-
-    version=$revision
-    if grep -q "[a-z0-9_-]*${requirement}[a-z0-9_-]*==" requirements.txt
-    then
-        if grep "^[a-z0-9_-]*${requirement}[a-z0-9_-]*==${version}\s*$" requirements.txt
-        then
-            echo "requirement ${requirement} already has version ${version}"
-            return 5
-        else
-            sed -i "/${requirement}/s/==.\+/==${version}/" requirements.txt
-            return 0
-        fi
-    fi
-
-}
-
-# More intellegent pyclean
-# Unalias pyclean from zsh python plugin
-unalias pyclean 2> /dev/null
-pyclean () {
-    local CACHE=.pyclean_cache HEAD=.git/HEAD TTL=-1h
-    [[ $1 == "-f" ]] && rm -f $CACHE
-
-    if [ -e $CACHE ] && [ $(find $CACHE -newer $HEAD -mtime $TTL) ]
-    then
-        cat $CACHE | xargs rm -f
-    else
-        find . -type f -name "*.py[co]" | tee $CACHE | xargs rm -f
-    fi
-}
-
-repl-listen () {
-    rlwrap -r --multi-line -q"\"" -b "(){}[],^%3@\";:'" lein trampoline cljsbuild repl-listen
-}
-
 pbcopy () {
     cat $1 | /usr/bin/pbcopy
 }
@@ -301,18 +196,6 @@ gj () {
 
 commit-id () {
     git log -1 --no-merges --oneline -- $1 | cut -d\  -f 1
-}
-
-pipu () {
-    [[ -z $VIRTUAL_ENV ]] && echo "you must be in virtualenv to run pipu" 1>&2 && return 1
-    [[ -f .lastcommit ]] && last_commit=$(cat .lastcommit)
-    current_commit=$(commit-id requirements.txt)
-    [[ $last_commit != $current_commit ]] && new=$(git diff $last_commit..$current_commit -- requirements.txt | grep '^+[^+]' | cut -c 2- )
-    [[ -n $new ]] && echo $new && pip install -r <(echo $new)
-    commit-id requirements.txt > .lastcommit
-}
-pipu () {
-    pip install --upgrade -r requirements.txt
 }
 
 vd () {
@@ -337,24 +220,8 @@ vt () {
     vim $FILE +/"\<$CLASS\>" +/"\<$METHOD\>"
 }
 
-false && which drip >/dev/null && clj () {
-    # Put the Clojure jar from the cellar and the current folder in the classpath.
-    CLOJURE=$CLASSPATH:/usr/local/Cellar/clojure/1.4.0/clojure-1.4.0.jar:${PWD}
+# update_venv
 
-    if [ "$#" -eq 0 ]; then
-        drip -cp "$CLOJURE" clojure.main --repl
-    else
-        drip -cp "$CLOJURE" clojure.main "$@"
-    fi
-}
-
-red () {
-    let task=$(echo $(current_branch) | pcregrep -o '(?<=f/)\d+')
-    [[ -n $task ]] && open "http://red.ostrovok.ru/issues/$task"
-}
-
-update_venv
-
-# Must be last line
+# Must be the last line
 source ~/.zshrc_local
 
